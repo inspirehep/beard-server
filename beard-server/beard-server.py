@@ -27,6 +27,11 @@ from flask_restful import Resource
 app = Flask(__name__)
 api = Api(app)
 
+DATA_PATH = "data/"
+MODELS_PATH = "models/"
+
+app.config.from_object(__name__)
+app.config.from_envvar('BEARDSERVER_SETTINGS', silent=True)
 
 distance_parser = reqparse.RequestParser()
 distance_parser.add_argument('input_signatures', required=True,
@@ -45,13 +50,17 @@ distance_parser.add_argument('Model_Name', default="model", type=str,
 
 
 def _distance_learning(callback, ethnicity_estimator, model_name):
-    pairs = pair_sampling(clusters_filename="data/clusters.json", verbose=0,
-                          train_filename="data/signatures.json")
+    pairs = pair_sampling(clusters_filename=app.config["DATA_PATH"] +
+                          "/clusters.json", verbose=0,
+                          train_filename=app.config["DATA_PATH"] +
+                          "/signatures.json")
 
-    json.dump(pairs, open('data/pairs.json', "w"))
+    json.dump(pairs, open(app.config["DATA_PATH"] + '/pairs.json', "w"))
 
-    learn_model('data/pairs.json', 'data/signatures.json',
-                'data/records.json', 'data/' + model_name,
+    learn_model(app.config["DATA_PATH"] + '/pairs.json',
+                app.config["DATA_PATH"] + '/signatures.json',
+                app.config["DATA_PATH"] + '/records.json',
+                app.config["MODELS_PATH"] + model_name,
                 ethnicity_estimator=ethnicity_estimator)
 
     r = requests.post(callback)
@@ -79,30 +88,34 @@ class DistanceLearning(Resource):
         """
         args = distance_parser.parse_args()
         # Touch data directory
-        if not os.path.exists('data'):
-            os.makedirs('data')
+        if not os.path.exists(app.config['DATA_PATH']):
+            os.makedirs(app.config['DATA_PATH'])
+        if not os.path.exists(app.config['MODELS_PATH']):
+            os.makedirs(app.config['MODELS_PATH'])
+
         # Touch and erase model
-        open('data/model.dat', 'w').close()
+        model_name = args['Model_Name']
+        open(app.config["MODELS_PATH"] + model_name, 'w').close()
 
         signatures = args['input_signatures']
-        signatures.save('data/signatures.json')
+        signatures.save(app.config["DATA_PATH"] + '/signatures.json')
         del signatures
 
         records = args['input_records']
-        records.save('data/records.json')
+        records.save(app.config["DATA_PATH"] + '/records.json')
         del records
 
         clusters = args['input_clusters']
-        clusters.save('data/clusters.json')
+        clusters.save(app.config["DATA_PATH"] + '/clusters.json')
         del clusters
 
         callback = args['Callback']
 
-        model_name = args['Model_Name']
         del args
 
         # Add ethnicity estimator, if present
-        ethnicity_estimator_path = 'data/ethnicity_estimator.pickle'
+        ethnicity_estimator_path = app.config["DATA_PATH"] + \
+            '/ethnicity_estimator.pickle'
         if os.path.isfile(ethnicity_estimator_path):
             ethnicity_estimator = ethnicity_estimator_path
         else:
@@ -147,8 +160,11 @@ clustering_parser.add_argument('Model_Name', default="model", type=str,
 
 def _clustering(n_jobs, method, train_signatures, threshold, model_name):
 
-    clustering('data/signatures.json', 'data/records.json',
-               'data/' + model_name, 'data/clusters.json', 'data/output.json',
+    clustering(app.config["DATA_PATH"] + '/signatures.json',
+               app.config["DATA_PATH"] + '/records.json',
+               app.config["MODELS_PATH"] + model_name,
+               app.config["DATA_PATH"] + '/clusters.json',
+               app.config["DATA_PATH"] + '/output.json',
                0, n_jobs, method, train_signatures, threshold)
 
     requests.post(callback, files={'disambiguated.json':
@@ -172,20 +188,21 @@ class Clustering(Resource):
         """
         args = clustering_parser.parse_args()
         signatures = args['input_signatures']
-        signatures.save('data/signatures.json')
+        signatures.save(app.config["DATA_PATH"] + '/signatures.json')
         del signatures
 
         train_signatures = args['train_signatures']
         if train_signatures:
-            train_signatures.save('data/train_signatures.json')
-            train_signatures = 'data/train_signatures'
+            train_signatures.save(app.config["DATA_PATH"] +
+                                  'train_signatures.json')
+            train_signatures = app.config["DATA_PATH"] + '/train_signatures'
 
         records = args['input_records']
-        records.save('data/records.json')
+        records.save(app.config["DATA_PATH"] + '/records.json')
         del records
 
         clusters = args['input_clusters']
-        clusters.save('data/clusters.json')
+        clusters.save(app.config["DATA_PATH"] + '/clusters.json')
         del clusters
 
         callback = args['Callback']
