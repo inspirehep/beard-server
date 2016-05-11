@@ -1,0 +1,254 @@
+{%- extends config.BEARD_SERVER_BASE_TEMPLATE %}
+
+{%- block page_body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 top-height grey">
+      <img id="logo" class="img-responsive center-block vertical" src="{{ url_for('static', filename='img/logo.png') }}">
+    </div>
+    <div class="col-md-6 top-height grey">
+      <div id="description" class="vertical">
+        <div class="vertical">
+          <p><b>Beard</b> - a Python library of machine learning tools for Bibliographic Entity Automatic Recognition and Disambiguation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 col-md-offset-9 height white">
+      <div class="vertical">
+        <h1>Clustering</h1>
+        <hr>
+        <p>Grouping together signatures from the same author.</p>
+        <div class="super">
+          <a href="#" data-toggle="modal" data-target="#clustering-api">Check</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 col-md-offset-3 height white">
+      <div class="vertical">
+        <h1>Predictor</h1>
+        <hr>
+        <p>Automatic selection of arXiv papers for inclusion in Inspire.</p>
+        <div class="super">
+          <a href="#" data-toggle="modal" data-target="#predictor-api">Check</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 height white">
+      <div class="vertical">
+        <h1>Text</h1>
+        <hr>
+        <p>A tool for generating phonetic blocks.</p>
+        <div class="super">
+          <a href="#" data-toggle="modal" data-target="#text-api">Check</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 height orange">
+      <div class="vertical">
+        <h1>GitHub</h1>
+        <hr>
+        <p>Inspire is a free software, thus you can redistribute it.</p>
+        <div class="link">
+          <a href="https://github.com/inspirehep/beard" target="_blank">Fork it</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Text modal -->
+<div id="text-api" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" id="text-modal">
+      <div class="modal-header">
+        <h4 class="modal-title">Text</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <p>A phonetic algorithm matches two different words with similar pronunciation to the same code, which allows phonetic similarity based word set comparison and indexing.</p>
+          </div>
+        </div>
+        <div class="row space">
+          <div class="col-md-12">
+            <h4>Example</h4>
+            <hr>
+            <form>
+              <fieldset class="form-group">
+                <input type="text" class="form-control" placeholder="Full name" ng-model="fullName">
+              </fieldset>
+              <div class="btn-group pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="getSamplePhoneticBlock()">Example</button>
+                <button type="submit" class="btn btn-default" ng-click="submitPhoneticBlock()">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <phonetic-block></phonetic-block>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h4>API</h4>
+            <hr>
+            <p>The API endpoint can be reached via <code>/api/text/phonetic_block</code> path. The endpoint expects <code>GET</code> request with <code>full_name</code> parameter. As a response, the server returns JSON object containing string with phonetic block only.</p>
+            <blockquote>
+              <code>curl -i -H "Accept: application/json"  -X GET "http://beard.inspirehep.net/api/text/phonetic_block?full_name=John%20Smith"</code>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Predictor modal -->
+<div id="predictor-api" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" id="predictor-modal">
+      <div class="modal-header">
+        <h4 class="modal-title">Predictor</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <p>Automatic selection of arXiv papers for inclusion in Inspire.</p>
+          </div>
+        </div>
+        <div class="row space">
+          <div class="col-md-12">
+            <h4>Example</h4>
+            <hr>
+            <form>
+              <fieldset class="form-group">
+                <input type="text" class="form-control" placeholder="Title" ng-model="publicationTitle">
+              </fieldset>
+              <fieldset class="form-group">
+                <textarea class="form-control" placeholder="Abstract" ng-model="publicationAbstract"></textarea>
+              </fieldset>
+              <fieldset class="form-group">
+                <input type="text" class="form-control" placeholder="arXiv category" ng-model="publicationCategory">
+              </fieldset>
+              <div class="btn-group pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="getSamplePublication()">Example</button>
+                <button type="submit" class="btn btn-default" ng-click="submitPredictor()">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <predictor-result></predictor-result>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h4>API</h4>
+            <hr>
+            <p>The API endpoint can be reached via <code>/api/predictor/coreness</code> path. The endpoint expects <code>POST</code> request with a body of the type <code>application/json</code>. As a response, the server returns JSON object containing two keys, <code>decision</code> and <code>scores</code> respectively.</p>
+            <blockquote>
+              <code>curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"title": TITLE, "abstract": ABSTRACT, "categories": [CATEGORIES]}' "http://beard.inspirehep.net/api/predictor/coreness"</code>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Clustering modal -->
+<div id="clustering-api" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" id="clustering-modal">
+      <div class="modal-header">
+        <h4 class="modal-title">Clustering</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <p>Semi-supervised block clustering, for grouping together signatures from the same author.</p>
+          </div>
+        </div>
+        <div class="row space">
+          <div class="col-md-12">
+            <h4>Example</h4>
+            <hr>
+            <form>
+              <fieldset class="form-group">
+                <textarea class="form-control" placeholder="Signatures" ng-model="clustersSignatures"></textarea>
+              </fieldset>
+              <fieldset class="form-group">
+                <textarea class="form-control" placeholder="Records" ng-model="clustersRecords"></textarea>
+              </fieldset>
+              <div class="btn-group pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="getSampleClusters()">Example</button>
+                <button type="submit" class="btn btn-default" ng-click="submitClusters()">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <clustering-result></clustering-result>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h4>Features</h4>
+            <hr>
+            The list of available features is presented below. In addition each signature is required to have <code>signature_id</code> key, which will be used to present results of the clustering process as well as <code>publication_id</code> to link the given signature with a record. The <code>publication_id</code> must be also presented in a record.
+          </div>
+        </div>
+        <div class="row">
+          <br>
+          <div class="col-md-6">
+            <h5>RECORDS</h5>
+            <p>Abstract <code>string</code></p>
+            <p>Authors (co-authors) <code>list of strings</code></p>
+            <p>Citations <code>list of ints</code></p>
+            <p>Collaborations <code>list of strings</code></p>
+            <p>Journal <code>string</code></p>
+            <p>Keywords <code>list of strings</code></p>
+            <p>References <code>list of ints</code></p>
+            <p>Title <code>string</code></p>
+            <p>Topics <code>list of strings</code></p>
+            <p>Year <code>int</code></p>
+          </div>
+          <div class="col-md-6">
+            <h5>SIGNATURES</h5>
+            <p>Author's affiliation <code>string</code></p>
+            <p>Author's name <code>string</code></p>
+            <p>Position of author's name <code>int</code></p>
+          </div>
+        </div>
+        <div class="row">
+          <br>
+          <div class="col-md-12">
+            <h4>API</h4>
+            <hr>
+            <p>The API endpoint can be reached via <code>/api/clustering/clusters</code> path. The endpoint expects <code>POST</code> request with a body of the type <code>application/json</code>. As a response, the server returns JSON object containing a dictionary with lists representing clustered signatures.</p>
+            <blockquote>
+              <code>curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"signatures": [SIGNATURES], "records": [RECORDS]}' "http://beard.inspirehep.net/api/clustering/clusters"</code>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endblock %}

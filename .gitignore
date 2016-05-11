@@ -1,6 +1,12 @@
+# Mac OS X
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+
+# Idea software family
+.idea/
 
 # C extensions
 *.so
@@ -45,7 +51,6 @@ coverage.xml
 
 # Translations
 *.mo
-*.pot
 
 # Django stuff:
 *.log
@@ -55,3 +60,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Bower modules.
+beard_server/static/src
+

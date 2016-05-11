@@ -1,0 +1,169 @@
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+
+  background: url('../img/background.jpg');
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: cover;
+
+  font-family: 'Lato', sans-serif;
+  color: #2c3e50;
+}
+
+@media screen and (min-width: 992px) {
+  .height {
+    height: 30vh;
+  }
+
+  .top-height {
+    height: 40vh;
+  }
+
+  #description {
+    padding-left: 150px !important;
+    padding-right: 150px !important;
+
+    border: 0;
+    border-left: 1px;
+    border-style: solid;
+    border-color: #bdc3c7;
+  }
+}
+
+.github {
+  text-align: right;
+}
+
+.grey {
+  background-color: #ecf0f1;
+}
+
+.height {
+  height: 30vh;
+}
+
+.link {
+  text-align: right;
+}
+
+.modal-content {
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important; 
+}
+
+.modal-content blockquote {
+  font-size: 1em !important;
+}
+
+.modal-content textarea {
+  max-width: 100% !important;
+}
+
+.modal-content .btn-primary {
+  background-color: #e67e22 !important;
+  border-color: #d35400 !important;
+}
+
+.no-space {
+  padding-top: 0px;
+}
+
+.orange {
+  padding-left: 50px;
+  padding-right: 50px;
+
+  background-color: #e67e22;
+  color: #ffffff;
+}
+
+.orange a {
+  color: #ffffff;
+}
+
+.orange h1 {
+  margin-top: 0 !important;
+
+  font-size: 1.4em;
+  font-weight: 300;
+
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.space {
+  padding-top: 20px;
+}
+
+.vertical {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.white {
+  padding-left: 50px;
+  padding-right: 50px;
+
+  background-color: #ffffff;
+}
+
+.super {
+  height: 20px;
+  width: 50px;
+
+  float: right;
+
+  background-color: #e67e22;
+}
+
+.super a {
+  display: block;
+
+  text-align: center;
+  color: #ffffff !important;
+}
+
+.white a {
+  color: #2c3e50;
+}
+
+.white h1 {
+  margin-top: 0 !important;
+
+  font-size: 1.4em;
+  font-weight: 300;
+
+  text-align: center;
+  text-transform: uppercase;
+}
+ 
+#description {
+  padding-left: 50px;
+  padding-right: 50px;
+
+  height: 150px !important;
+}
+
+#logo {
+  width: 220px;
+  height: auto;
+}
+
+/* nProgress bar */
+#nprogress .bar {
+  background: #ec5e00 !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #ec5e00, 0 0 5px #ec5e00 !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #ec5e00 !important;
+  border-left-color: #ec5e00 !important;
+}

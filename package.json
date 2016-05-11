@@ -1,0 +1,15 @@
+{
+  "name": "beard-server",
+  "description": "Application providing REST API over Beard",
+  "authors": [
+    "Grzegorz Jacenków <grzegorz.jacenkow@cern.ch>"
+  ],
+  "version": "0.1.0",
+  "dependencies": {
+    "angular": "1.5.x",
+    "angular-sanitize": "1.5.x",
+    "bootstrap": "3.3.x",
+    "jquery": "2.2.x",
+    "nprogress": "0.2.x"
+  }
+}
