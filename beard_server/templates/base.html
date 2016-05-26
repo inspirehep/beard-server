@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/nprogress/nprogress.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/beard.css') }}">
+    <title>Beard - Bibliographic Entity Automatic Recognition and Disambiguation</title>
+  </head>
+  <body ng-app="beard" ng-controller="BeardController">
+    {%- block page_body %}
+    {%- endblock page_body %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='src/jquery/dist/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='src/angular/angular.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='src/angular-sanitize/angular-sanitize.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='src/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='src/nprogress/nprogress.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

@@ -2,12 +2,12 @@
  beard-server v0.1.0
 =====================
 
-beard-server v0.1.0 was released on TBD, 2015.
+beard-server v0.1.0 was released on TBD, 2016.
 
 About
 -----
 
-Application providing Beard as a Celery service.
+Beard as RESTful API and Celery service.
 
 *This is an experimental developer preview release.*
 
