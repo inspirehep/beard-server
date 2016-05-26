@@ -68,7 +68,7 @@ def available_methods():
 def get_phonetic_block():
     """Create phonetic block from a given full name using nysiis algorithm."""
     try:
-        name = {'author_name': request.values.get('full_name', 0, type=str)}
+        name = {'author_name': request.values.get('full_name', type=unicode)}
 
         signature_block = block_phonetic(
             np.array([name], dtype=np.object).reshape(-1, 1),
