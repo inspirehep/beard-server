@@ -179,7 +179,7 @@ app.controller('BeardController', ['$scope', '$http', function($scope, $http) {
 
     $http.get("/api/text/phonetic_block?full_name=" + name)
     .success(function(data) {
-      $scope.phonetic = data;
+      $scope.phonetic = data.phonetic_block;
 
       $scope.phoneticColour = "#27ae60";
       NProgress.done();

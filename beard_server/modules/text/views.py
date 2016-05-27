@@ -56,7 +56,7 @@ def available_methods():
             "method": "[GET]",
             "example": {
                 "request": "/api/text/phonetic_block?full_name=John%20Smith",
-                "response": "SNATHj"
+                "response": {"phonetic_block": "SNATHj"}
             }
         }
     }
@@ -74,7 +74,7 @@ def get_phonetic_block():
             np.array([name], dtype=np.object).reshape(-1, 1),
             threshold=0,
             phonetic_algorithm='nysiis'
-        )
+        )[0]
     except IndexError:
         # Most likely a malformed author name.
         abort(420)
@@ -82,4 +82,4 @@ def get_phonetic_block():
         # Missing full_name argument.
         abort(400)
 
-    return jsonify(signature_block[0])
+    return jsonify({"phonetic_block": signature_block})
