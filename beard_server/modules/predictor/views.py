@@ -84,7 +84,7 @@ def available_methods():
                     "title": "".join(["Discovery of a Long-Lived, High",
                                       "Amplitude Dusty Infrared Transient"])
                 },
-                "head": {
+                "header": {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },
@@ -99,7 +99,7 @@ def available_methods():
             }
         },
         "train": {
-            "path": "/api/clustering/clusters",
+            "path": "/api/predictor/train",
             "method": "[POST]",
             "example": {
                 "body": [{
@@ -141,7 +141,7 @@ def available_methods():
                         "gr-qc"
                     ]
                 }],
-                "head": {
+                "header": {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },

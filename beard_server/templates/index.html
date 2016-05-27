@@ -97,9 +97,9 @@
           <div class="col-md-12">
             <h4>API</h4>
             <hr>
-            <p>The API endpoint can be reached via <code>/api/text/phonetic_block</code> path. The endpoint expects <code>GET</code> request with <code>full_name</code> parameter. As a response, the server returns JSON object containing string with phonetic block only.</p>
+            <p>The API endpoint can be reached via <code>/api/text/phonetic_blocks</code> path. The endpoint expects <code>POST</code> request with a body of the type <code>application/json</code>. As a response, the server returns JSON object containing <code>phonetic_blocks</code> key, where all phonetic blocks can be accessed by the keys of original full names.</p>
             <blockquote>
-              <code>curl -i -H "Accept: application/json"  -X GET "http://beard.inspirehep.net/api/text/phonetic_block?full_name=John%20Smith"</code>
+              <code>curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"full_names": [FULL NAMES]}' "http://beard.inspirehep.net/api/text/phonetic_blocks"</code>
             </blockquote>
           </div>
         </div>

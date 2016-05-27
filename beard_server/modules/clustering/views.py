@@ -91,7 +91,7 @@ def available_methods():
                         ]
                     }]
                 },
-                "head": {
+                "header": {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },
@@ -102,7 +102,7 @@ def available_methods():
             }
         },
         "train": {
-            "path": "/api/clustering/clusters",
+            "path": "/api/clustering/train",
             "method": "[POST]",
             "example": {
                 "body": {
@@ -146,7 +146,7 @@ def available_methods():
                         ]
                     }]
                 },
-                "head": {
+                "header": {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },
