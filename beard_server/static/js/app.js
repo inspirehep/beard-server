@@ -177,9 +177,13 @@ app.controller('BeardController', ['$scope', '$http', function($scope, $http) {
       return;
     }
 
-    $http.get("/api/text/phonetic_block?full_name=" + name)
+    var fullNames = {
+      full_names: [name]
+    };
+
+    $http.post("/api/text/phonetic_blocks", fullNames)
     .success(function(data) {
-      $scope.phonetic = data.phonetic_block;
+      $scope.phonetic = data.phonetic_blocks[name];
 
       $scope.phoneticColour = "#27ae60";
       NProgress.done();
@@ -197,7 +201,7 @@ app.controller('BeardController', ['$scope', '$http', function($scope, $http) {
       title: title,
       abstract: abstract,
       categories: categories
-    }
+    };
 
     $http.post("/api/predictor/coreness", publication)
     .success(function(data) {

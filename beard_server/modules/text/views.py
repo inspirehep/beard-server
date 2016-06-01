@@ -35,10 +35,7 @@ from flask import (
     jsonify,
     request)
 
-import numpy as np
-
-from beard.clustering import block_phonetic
-
+from .utils import phonetic_blocks
 
 blueprint = Blueprint(
     'beard_server_text',
@@ -51,12 +48,24 @@ blueprint = Blueprint(
 def available_methods():
     """List of available methods to call as the part of API."""
     available = {
-        "clusters": {
-            "path": "/api/text/phonetic_block",
-            "method": "[GET]",
+        "phonetic_blocks": {
+            "path": "/api/text/phonetic_blocks",
+            "method": "[POST]",
             "example": {
-                "request": "/api/text/phonetic_block?full_name=John%20Smith",
-                "response": {"phonetic_block": "SNATHj"}
+                "body": {
+                    "full_names": [
+                        "John Smith"
+                    ]
+                },
+                "header": {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                "response": {
+                    "phonetic_blocks": {
+                        "John Smith": "SNATHj"
+                    }
+                }
             }
         }
     }
@@ -64,22 +73,36 @@ def available_methods():
     return jsonify(available)
 
 
-@blueprint.route('/phonetic_block', methods=['GET'])
-def get_phonetic_block():
+@blueprint.route('/phonetic_blocks', methods=['POST'])
+def get_phonetic_blocks():
     """Create phonetic block from a given full name using nysiis algorithm."""
-    try:
-        name = {'author_name': request.values.get('full_name', type=unicode)}
+    full_names_data = request.get_json(silent=True)
 
-        signature_block = block_phonetic(
-            np.array([name], dtype=np.object).reshape(-1, 1),
-            threshold=0,
-            phonetic_algorithm='nysiis'
-        )[0]
-    except IndexError:
-        # Most likely a malformed author name.
-        abort(420)
-    except TypeError:
-        # Missing full_name argument.
+    # Unpack the body of the POST request.
+    try:
+        full_names = full_names_data['full_names']
+    except KeyError:
+        # Missing data.
         abort(400)
 
-    return jsonify({"phonetic_block": signature_block})
+    try:
+        response = phonetic_blocks(full_names)
+    except TypeError:
+        # Malformed author's name.
+        full_names_trimmed = []
+
+        for full_name in full_names:
+            try:
+                # For the time being of Python 2.
+                # Most probably a given name cannot be converted to unicode.
+                if not isinstance(full_name, unicode):
+                    unicode(full_name, 'utf8')
+            except TypeError:
+                continue
+
+            # Create a subset of valid full names.
+            full_names_trimmed.append(full_name)
+
+        response = phonetic_blocks(full_names_trimmed)
+
+    return jsonify({"phonetic_blocks": response})

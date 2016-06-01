@@ -22,25 +22,37 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
+"""Tool for generating phonetic blocks."""
+
 from __future__ import (
     absolute_import,
     division,
     print_function)
 
-import logging
-import sys
+import numpy as np
 
-from flask import Flask
+from beard.clustering import block_phonetic
 
-from beard_server import beardserver
 
-app = Flask(__name__)
-beardserver(app)
+def phonetic_blocks(full_names, phonetic_algorithm='nysiis'):
+    """Create a dictionary of phonetic blocks for a given list of names."""
 
-logging.basicConfig(stream=sys.stderr)
+    # The method requires a list of dictionaries with full_name as keys.
+    full_names_formatted = [
+        {"author_name": i} for i in full_names]
 
-if __name__ == '__main__':
-    # Text endpoint sends back keys UTF-8.
-    app.config['JSON_AS_ASCII'] = False
+    # Create a list of phonetic blocks.
+    phonetic_blocks = list(
+        block_phonetic(np.array(
+            full_names_formatted,
+            dtype=np.object).reshape(-1, 1),
+            threshold=0,
+            phonetic_algorithm=phonetic_algorithm
+        )
+    )
 
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    # Return a dictionary iff every name was converted into a phonetic block.
+    if len(full_names) == len(phonetic_blocks):
+        return dict(zip(full_names, phonetic_blocks))
+    else:
+        raise TypeError
