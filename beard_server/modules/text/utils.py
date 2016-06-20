@@ -24,10 +24,8 @@
 
 """Tool for generating phonetic blocks."""
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function)
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
 
 import numpy as np
 
@@ -51,8 +49,4 @@ def phonetic_blocks(full_names, phonetic_algorithm='nysiis'):
         )
     )
 
-    # Return a dictionary iff every name was converted into a phonetic block.
-    if len(full_names) == len(phonetic_blocks):
-        return dict(zip(full_names, phonetic_blocks))
-    else:
-        raise TypeError
+    return dict(zip(full_names, phonetic_blocks))

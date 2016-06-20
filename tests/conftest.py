@@ -25,10 +25,13 @@
 
 """Pytest configuration."""
 
-from __future__ import absolute_import, print_function
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
 
 import pytest
 from flask import Flask
+
+from beard_server import beardserver
 
 
 @pytest.fixture()
@@ -38,4 +41,6 @@ def app():
     app.config.update(
         TESTING=True
     )
+    beardserver(app)
+
     return app

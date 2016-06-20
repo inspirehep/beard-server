@@ -24,21 +24,17 @@
 
 """Bibliographic Entity Automatic Recognition and Disambiguation."""
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function)
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
 
 import cPickle as pickle
 import os
 
-from .utils import (
-    clustering,
-    learn_model,
-    pair_sampling)
+from .utils import clustering, learn_model, pair_sampling
+from .recid import make_recid_clusters
 
 
-def predict(records, signatures):
+def predict(records, signatures, clusters=False):
     # Default parameters for clustering signatures.
     blocking_function = 'block_phonetic'
     blocking_threshold = 0
@@ -53,8 +49,15 @@ def predict(records, signatures):
     distance_model = os.path.abspath(os.path.join(os.path.dirname(
         __file__), 'classifiers/linkage.dat'))
 
+    # Create known clusters.
+    if clusters:
+        known_clusters = make_recid_clusters(signatures, True)
+    else:
+        known_clusters = None
+
     return clustering(input_signatures=signatures,
                       input_records=records,
+                      input_clusters=known_clusters,
                       distance_model=distance_model,
                       verbose=verbose, n_jobs=n_jobs,
                       clustering_threshold=clustering_threshold,

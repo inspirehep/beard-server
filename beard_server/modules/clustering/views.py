@@ -24,20 +24,13 @@
 
 """Clustering endpoint."""
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function)
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
 
-from flask import (
-    abort,
-    Blueprint,
-    jsonify,
-    request)
+from flask import abort, Blueprint, jsonify, request
 
-from .beard import (
-    predict as clustering,
-    train as learn_model)
+from .beard import predict as clustering
+from .beard import train as learn_model
 
 blueprint = Blueprint(
     'beard_server_clustering',
@@ -174,7 +167,7 @@ def make_clusters():
 
     try:
         return jsonify(clustering(records, signatures))
-    except IOError:
+    except IOError:  # pragma: no cover
         # Probably the file does not exist, ie. the model was not trained.
         abort(404)
 

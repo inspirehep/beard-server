@@ -24,10 +24,10 @@
 
 """Beard as RESTful API and Celery service."""
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function)
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
+
+from beard_server import config
 
 from .modules import blueprints
 from .views import blueprint
@@ -56,7 +56,4 @@ class beardserver(object):
 
     def init_config(self, app):
         """Initialize configuration."""
-        app.config.setdefault(
-            "BEARD_SERVER_BASE_TEMPLATE",
-            app.config.get("BASE_TEMPLATE",
-                           "base.html"))
+        app.config.from_object(config)

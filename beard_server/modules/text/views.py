@@ -24,16 +24,10 @@
 
 """Phonetic blocks endpoint."""
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function)
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
 
-from flask import (
-    abort,
-    Blueprint,
-    jsonify,
-    request)
+from flask import abort, Blueprint, jsonify, request
 
 from .utils import phonetic_blocks
 
