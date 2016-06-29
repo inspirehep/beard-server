@@ -22,7 +22,25 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
-"""Celery service instance configuration."""
+"""Celery and Jinja instances configuration."""
 
-BROKER_URL = 'amqp://'
-CELERY_IMPORTS = ('beard_server.tasks',)
+# Celery.
+BROKER_URL = "amqp://"
+CELERY_RESULT_BACKEND = "amqp://"
+
+CELERY_IMPORTS = ("beard_server.tasks",)
+CELERY_TASK_SERIALIZER = "msgpack"
+CELERY_RESULT_SERIALIZER = "msgpack"
+
+CELERY_ROUTES = {
+    "beard_server.tasks.make_clusters": {
+        "queue": "beard"
+    },
+    "beard_server.tasks.solve_conflicts": {
+        "queue:": "beard"
+    }
+}
+
+# Jinja.
+BEARD_SERVER_BASE_TEMPLATE = "base.html"
+JSON_AS_ASCII = False

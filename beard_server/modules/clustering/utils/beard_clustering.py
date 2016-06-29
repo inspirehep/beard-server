@@ -182,10 +182,9 @@ def clustering(input_signatures, input_records, distance_model,
 
     # Semi-supervised block clustering
     if input_clusters:
-        true_clusters = json.load(open(input_clusters, "r"))
         y_true = -np.ones(len(X), dtype=np.int)
 
-        for label, signature_ids in true_clusters.items():
+        for label, signature_ids in input_clusters.items():
             for signature_id in signature_ids:
                 y_true[indices[signature_id]] = label
 

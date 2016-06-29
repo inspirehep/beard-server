@@ -22,10 +22,8 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function)
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
 
 import logging
 import sys
@@ -34,13 +32,10 @@ from flask import Flask
 
 from beard_server import beardserver
 
-app = Flask(__name__)
-beardserver(app)
+application = Flask(__name__)
+beardserver(application)
 
 logging.basicConfig(stream=sys.stderr)
 
 if __name__ == '__main__':
-    # Text endpoint sends back keys UTF-8.
-    app.config['JSON_AS_ASCII'] = False
-
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    application.run(host="0.0.0.0", port=5000, debug=True)

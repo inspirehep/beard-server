@@ -24,10 +24,8 @@
 
 """Collection of all blueprints from available modules."""
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function)
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
 
 from .clustering import blueprints as clustering_blueprints
 from .predictor import blueprints as predictor_blueprints

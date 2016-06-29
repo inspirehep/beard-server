@@ -22,13 +22,12 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
-
 """Module tests."""
 
-from __future__ import absolute_import, print_function
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
 
 from flask import Flask
-from flask_babelex import Babel
 
 from beard_server import beardserver
 
@@ -54,9 +53,6 @@ def test_init():
 
 def test_view(app):
     """Test view."""
-    Babel(app)
-    beardserver(app)
     with app.test_client() as client:
         res = client.get("/")
         assert res.status_code == 200
-        assert 'Welcome to beard-server' in str(res.data)

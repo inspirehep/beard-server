@@ -22,13 +22,31 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
-"""Text blueprints."""
+notifications:
+  email: false
 
-from __future__ import absolute_import, division, print_function, \
-    unicode_literals
+sudo: false
 
-from .views import blueprint as phonetic_block_blueprint
+language: python
 
-blueprints = [
-    phonetic_block_blueprint,
-]
+cache:
+  - pip
+
+env:
+  - REQUIREMENTS=release
+
+python:
+  - "2.7"
+
+before_install:
+  - "travis_retry pip install --upgrade pip setuptools py"
+  - "travis_retry pip install twine wheel coveralls"
+
+install:
+  - "travis_retry pip install -e .[all]"
+
+script:
+  - "./run-tests.sh"
+
+after_success:
+  - coveralls

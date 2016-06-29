@@ -24,10 +24,8 @@
 
 """Celery service instance."""
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function)
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
 
 from beard_server import config
 from celery import Celery

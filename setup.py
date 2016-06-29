@@ -42,6 +42,7 @@ tests_require = [
     'pytest-cov>=1.8.0',
     'pytest-pep8>=1.0.6',
     'pytest>=2.8.0',
+    'requests>=2.10.0',
 ]
 
 extras_require = {
@@ -63,8 +64,13 @@ setup_requires = [
 install_requires = [
     'beard>=0.2',
     'celery>=3.1.23',
-    'flower>=0.8.4',
+    'flower>=0.9.1',
     'Flask-BabelEx>=0.9.2',
+    'gunicorn>=19.6.0',
+    'honcho>=0.7.1',
+    'msgpack-python>=0.4.7',
+    'numpy>=1.11.0',
+    'scipy>=0.17.1',
 ]
 
 packages = find_packages()

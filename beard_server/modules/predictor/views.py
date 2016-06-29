@@ -24,10 +24,8 @@
 
 """Predictor endpoint."""
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function)
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
 
 import cPickle as pickle
 import os
@@ -169,7 +167,7 @@ def guess_coreness():
             __file__), 'classifiers/linkage.dat'))
 
         distance_model = pickle.load(open(distance_model_path, 'rb'))
-    except IOError:
+    except IOError:  # pragma: no cover
         # Probably the file does not exist, ie. the model was not trained.
         abort(404)
 

@@ -33,7 +33,8 @@ Run example development server:
    $ flask -a app.py --debug run
 """
 
-from __future__ import absolute_import, print_function
+from __future__ import absolute_import, division, print_function, \
+    unicode_literals
 
 from flask import Flask
 from flask_babelex import Babel
