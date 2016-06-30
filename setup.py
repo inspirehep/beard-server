@@ -87,7 +87,7 @@ setup(
     version=version,
     description=__doc__,
     long_description=readme + '\n\n' + history,
-    keywords='invenio TODO',
+    keywords='author disambiguation',
     license='GPLv2',
     author='CERN',
     author_email='admin@inspirehep.net',
@@ -96,14 +96,6 @@ setup(
     zip_safe=False,
     include_package_data=True,
     platforms='any',
-    entry_points={
-        'invenio_base.apps': [
-            'beard_server = beard_server:beardserver',
-        ],
-        'invenio_i18n.translations': [
-            'messages = beard_server',
-        ],
-    },
     extras_require=extras_require,
     install_requires=install_requires,
     setup_requires=setup_requires,
@@ -114,14 +106,10 @@ setup(
         'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-        'Topic :: Software Development :: Libraries :: Python Modules',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Development Status :: 1 - Planning',
+        'Development Status :: 4 - Beta',
+        'Topic :: Scientific/Engineering :: Artificial Intelligence',
+        'Topic :: Scientific/Engineering :: Information Analysis'
     ],
 )

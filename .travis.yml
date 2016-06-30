@@ -1,52 +1,29 @@
-# -*- coding: utf-8 -*-
-#
-# This file is part of Inspire.
-# Copyright (C) 2016 CERN.
-#
-# Inspire is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Inspire is distributed in the hope that it will be
-# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Inspire; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
-#
-# In applying this license, CERN does not
-# waive the privileges and immunities granted to it by virtue of its status
-# as an Intergovernmental Organization or submit itself to any jurisdiction.
-
 notifications:
   email: false
-
 sudo: false
-
 language: python
-
 cache:
-  - pip
-
+- pip
 env:
-  - REQUIREMENTS=release
-
+- REQUIREMENTS=release
 python:
-  - "2.7"
-
+- '2.7'
 before_install:
-  - "travis_retry pip install --upgrade pip setuptools py"
-  - "travis_retry pip install twine wheel coveralls"
-
+- travis_retry pip install --upgrade pip setuptools py
+- travis_retry pip install twine wheel coveralls
 install:
-  - "travis_retry pip install -e .[all]"
-
+- travis_retry pip install -e .[all]
 script:
-  - "./run-tests.sh"
-
+- "./run-tests.sh"
 after_success:
-  - coveralls
+- coveralls
+deploy:
+  provider: pypi
+  user: inspirehep
+  password:
+    secure: sjVzAkFOTANImX2Fs+rYcYt+o8tiWdsz4unix+Jq/mHS7zHSyVVOC+/MTOn6O6qCoLiThhgjO/UgxcbW82zXgfmPaXreJ3E1qIea5tINK53It49cqZRaMJ1fs5tv8uM1L/e9BTLMiZs2PbSOJ3yN9XteE0O8/oSvMBf0ZrBoBonBk4k6Q3LmhoQzfPwPUborylL1ccJlb6kEaC6V9Ic9jruzPL14ACV+ZYfTlNVnCT3q3HQbdQKVBTb5dJk97rwjgubEm0xJ7WQaKWdLgt3R+bAzhy3VpFWZj5AnmO1xZC2fD06NCr9k+NxCIKr15PEiJVEAgS14z12isRj3+pBC1ga9lKtcvQeHAoP3Bl+VKIWcMK5XvLWTuJkB02OKA02uErZBEYqqUlMG/bf9YWIeqJkrH79gJdeKKFCmtpaPDjQg+PY1pXJL1Loz0219sOuN4B+Aip+UXJxuekz84yumhEPZX8E6IF8Qlb2KDbMG8kUI9cOFmQrO+aJ9vWRsDdy+sPXD6krcI/ITD8DbW9JxdNCFq8mGGPJAefFticUnzcm0rgYJ3VGTn/o7GQ+fqrIjYtSWP2fcFNnsulWLbcNOwTIIALqV0JcP49qVcU9HbtkHKm4OLRC+28JYsMX024FYo6tUiuoTmSHjuDH8ffSX/SDMjqDdxPX2Sswdw3S8KOY=
+  on:
+    tags: true
+    branch: master
+    distributions: sdist bdist_wheel
+    repo: inspirehep/beard-server
