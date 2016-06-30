@@ -23,4 +23,8 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
+set -e
+
+pydocstyle --convention=pep257 --match-dir='^((?!ext).)*$' beard-server
+check-manifest
 python setup.py test

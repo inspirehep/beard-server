@@ -27,6 +27,7 @@
 include .dockerignore
 include .editorconfig
 include .tx/config
+include .bowerrc
 recursive-include beard_server *.po *.pot *.mo
 
 # added by check_manifest.py
@@ -43,3 +44,17 @@ recursive-include docs *.rst
 recursive-include docs Makefile
 recursive-include examples *.py
 recursive-include tests *.py
+
+# added by check_manifest.py
+include *.json
+include *.md
+include .coveragerc
+include Procfile
+include gunicorn.cfg
+recursive-include beard_server *.css
+recursive-include beard_server *.dat
+recursive-include beard_server *.jpg
+recursive-include beard_server *.js
+recursive-include beard_server *.pickle
+recursive-include beard_server *.png
+recursive-include tests *.json
