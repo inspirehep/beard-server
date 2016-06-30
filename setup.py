@@ -64,7 +64,6 @@ setup_requires = [
 install_requires = [
     'beard>=0.2',
     'celery>=3.1.23',
-    'flower>=0.9.1',
     'Flask-BabelEx>=0.9.2',
     'gunicorn>=19.6.0',
     'honcho>=0.7.1',

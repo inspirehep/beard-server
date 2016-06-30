@@ -56,3 +56,11 @@ def test_view(app):
     with app.test_client() as client:
         res = client.get("/")
         assert res.status_code == 200
+
+
+def test_ping(app):
+    """Test ping response."""
+    with app.test_client() as client:
+        res = client.get("/ping")
+        assert res.data == "OK"
+        assert res.status_code == 200
