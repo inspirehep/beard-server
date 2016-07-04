@@ -27,8 +27,24 @@
 import os
 import sys
 
+from distutils.command.build import build
+
 from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
+from setuptools.command.install_lib import install_lib
+
+
+class _build(build):
+    """Run bower during installation."""
+    sub_commands = [('install_bower', None)] + build.sub_commands
+
+
+class _install_lib(install_lib):
+    """Trigger install_bower command."""
+    def run(self):
+        install_lib.run(self)
+        self.run_command('install_bower')
+
 
 readme = open('README.rst').read()
 history = open('CHANGES.rst').read()
@@ -112,4 +128,8 @@ setup(
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
         'Topic :: Scientific/Engineering :: Information Analysis'
     ],
+    cmdclass={
+        'build': _build,
+        'install_lib': _install_lib,
+    },
 )
