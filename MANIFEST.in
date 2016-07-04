@@ -27,7 +27,6 @@
 include .dockerignore
 include .editorconfig
 include .tx/config
-include .bowerrc
 recursive-include beard_server *.po *.pot *.mo
 
 # added by check_manifest.py
