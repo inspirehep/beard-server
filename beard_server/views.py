@@ -42,3 +42,9 @@ blueprint = Blueprint(
 def index():
     """Basic view."""
     return render_template("index.html")
+
+
+@blueprint.route("/ping", methods=['GET'])
+def ping():
+    """Return OK if the server will be pinged."""
+    return "OK"
