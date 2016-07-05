@@ -10,7 +10,7 @@ python:
 - '2.7'
 before_install:
 - travis_retry pip install --upgrade pip setuptools py
-- travis_retry pip install twine wheel coveralls
+- travis_retry pip install clint twine wheel coveralls
 install:
 - travis_retry pip install -e .[all]
 script:
