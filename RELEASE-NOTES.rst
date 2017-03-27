@@ -1,8 +1,8 @@
 =====================
- beard-server v0.1.0
+ beard-server v0.3.0
 =====================
 
-beard-server v0.1.0 was released on TBD, 2016.
+beard-server v0.3.0 was released on March, 2017.
 
 About
 -----
@@ -14,12 +14,12 @@ Beard as RESTful API and Celery service.
 What's new
 ----------
 
-- Initial public release.
+- New training model
 
 Installation
 ------------
 
-   $ pip install beard-server==0.1.0
+   $ pip install beard-server==0.3.0
 
 Documentation
 -------------

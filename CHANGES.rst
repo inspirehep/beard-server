@@ -25,6 +25,10 @@
 Changes
 =======
 
+Version 0.3.0 (released TBD)
+
+- New training model to be used without arXiv categories.
+
 Version 0.1.0 (released TBD)
 
 - Initial public release.
